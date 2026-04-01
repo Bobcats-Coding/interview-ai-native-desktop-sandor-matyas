@@ -1,0 +1,181 @@
+01-15 09:00:01.123  1000  1000 I/SystemServer: Entered the Android system server!
+01-15 09:00:01.456  1000  1000 I/SystemServer: Activity Manager starting...
+01-15 09:00:02.789  1000  1015 I/ActivityManager: System ready
+01-15 09:00:03.012  1000  1015 D/ActivityManager: Starting persistent apps
+01-15 09:00:03.345   892   892 I/Zygote: Process: zygote socket opened
+01-15 09:00:05.678  2145  2145 I/ActivityManager: Start proc 2145:com.example.myapp/u0a85 for activity
+01-15 09:00:05.901  2145  2145 D/MyApp: Application.onCreate() called
+01-15 09:00:06.234  2145  2145 I/MyApp: Initializing application version=2.4.1 build=847
+01-15 09:00:06.567  2145  2145 D/MyApp: Loading configuration from SharedPreferences
+01-15 09:00:06.890  2145  2145 D/MyApp: Config loaded: theme=dark, notifications=true, sync_interval=15min
+01-15 09:00:07.123  2145  2167 I/MyApp: Database initialized version=12 path=/data/data/com.example.myapp/databases/app.db
+01-15 09:00:07.456  2145  2145 I/ActivityManager: Displayed com.example.myapp/.ui.MainActivity: +1s834ms
+01-15 09:00:08.789  2145  2145 D/MyApp: MainActivity.onResume() - loading dashboard data
+01-15 09:00:09.012  2145  2178 I/NetworkUtils: Starting API request url=https://api.example.com/v2/dashboard
+01-15 09:00:09.345  2145  2178 D/NetworkUtils: Request headers: Authorization=Bearer ***, Accept=application/json
+01-15 09:00:10.678  2145  2178 I/NetworkUtils: API response received status=200 duration=1666ms size=12.4KB
+01-15 09:00:10.901  2145  2145 D/MyApp: Dashboard data loaded items=24 cached=false
+01-15 09:00:12.234  2145  2145 V/MyApp: RecyclerView populated with 24 items, layout pass completed
+01-15 09:00:15.567  2145  2145 D/MyApp: User tapped on item id=task-42
+01-15 09:00:15.890  2145  2145 I/ActivityManager: Displayed com.example.myapp/.ui.DetailActivity: +312ms
+01-15 09:00:16.123  2145  2178 I/NetworkUtils: Starting API request url=https://api.example.com/v2/tasks/42
+01-15 09:00:16.890  2145  2178 I/NetworkUtils: API response received status=200 duration=767ms size=3.2KB
+01-15 09:00:20.123  2145  2145 D/MyApp: User editing task id=task-42 field=description
+01-15 09:00:25.456  2145  2178 I/NetworkUtils: Starting API request url=https://api.example.com/v2/tasks/42 method=PUT
+01-15 09:00:26.234  2145  2178 I/NetworkUtils: API response received status=200 duration=778ms size=3.4KB
+01-15 09:00:26.567  2145  2145 I/MyApp: Task updated successfully id=task-42
+01-15 09:00:30.890  2145  2145 D/MyApp: User navigated back to MainActivity
+01-15 09:00:35.123  2145  2178 I/NetworkUtils: Starting API request url=https://api.example.com/v2/dashboard
+01-15 09:00:35.456  2145  2178 W/NetworkUtils: Slow network detected latency=2340ms threshold=2000ms
+01-15 09:00:37.789  2145  2178 I/NetworkUtils: API response received status=200 duration=2666ms size=12.5KB
+01-15 09:00:38.012  2145  2145 D/MyApp: Dashboard refreshed items=24
+01-15 09:00:40.345  2145  2190 I/MyApp: Background sync started
+01-15 09:00:40.678  2145  2190 D/MyApp: Checking for pending offline changes
+01-15 09:00:40.901  2145  2190 D/MyApp: No pending offline changes found
+01-15 09:00:41.234  2145  2190 I/MyApp: Background sync completed duration=889ms changes=0
+01-15 09:00:45.567  2145  2145 D/MyApp: User opened navigation drawer
+01-15 09:00:46.890  2145  2145 D/MyApp: User tapped on Settings
+01-15 09:00:47.123  2145  2145 I/ActivityManager: Displayed com.example.myapp/.ui.SettingsActivity: +233ms
+01-15 09:00:50.456  2145  2145 D/MyApp: User toggled notification setting enabled=false
+01-15 09:00:50.789  2145  2145 I/MyApp: Preference updated key=notifications value=false
+01-15 09:00:55.012  1000  1022 I/GCManager: GC freed 2.4MB, 35% free 12.1MB/18.5MB, paused 3ms
+01-15 09:01:00.345  2145  2145 D/MyApp: User navigated back to MainActivity
+01-15 09:01:05.678  2145  2145 D/MyApp: User pulled to refresh
+01-15 09:01:05.901  2145  2178 I/NetworkUtils: Starting API request url=https://api.example.com/v2/dashboard
+01-15 09:01:06.234  2145  2178 E/NetworkUtils: Network request failed url=https://api.example.com/v2/dashboard error=java.net.SocketTimeoutException: connect timed out
+01-15 09:01:06.567  2145  2145 W/MyApp: Failed to refresh dashboard, showing cached data
+01-15 09:01:06.890  2145  2145 I/MyApp: Displaying offline banner to user
+01-15 09:01:10.123  1000  1015 I/ConnectivityManager: Network connectivity changed type=WIFI state=DISCONNECTED
+01-15 09:01:10.456  1000  1015 I/ConnectivityManager: Network connectivity changed type=MOBILE state=CONNECTED subtype=LTE
+01-15 09:01:10.789  2145  2145 I/MyApp: Network state changed: MOBILE/LTE
+01-15 09:01:15.012  2145  2178 I/NetworkUtils: Starting API request url=https://api.example.com/v2/dashboard
+01-15 09:01:16.345  2145  2178 I/NetworkUtils: API response received status=200 duration=1333ms size=12.5KB
+01-15 09:01:16.678  2145  2145 I/MyApp: Dashboard refreshed, removing offline banner
+01-15 09:01:20.901  2145  2145 D/MyApp: User tapped on item id=task-15
+01-15 09:01:21.234  2145  2145 I/ActivityManager: Displayed com.example.myapp/.ui.DetailActivity: +287ms
+01-15 09:01:22.567  2145  2178 I/NetworkUtils: Starting API request url=https://api.example.com/v2/tasks/15
+01-15 09:01:23.234  2145  2178 I/NetworkUtils: API response received status=200 duration=667ms size=5.1KB
+01-15 09:01:25.567  2145  2145 D/MyApp: User tapped delete button for task id=task-15
+01-15 09:01:25.890  2145  2145 D/MyApp: Showing confirmation dialog for task deletion
+01-15 09:01:27.123  2145  2145 D/MyApp: User confirmed deletion of task id=task-15
+01-15 09:01:27.456  2145  2178 I/NetworkUtils: Starting API request url=https://api.example.com/v2/tasks/15 method=DELETE
+01-15 09:01:28.012  2145  2178 I/NetworkUtils: API response received status=204 duration=556ms
+01-15 09:01:28.345  2145  2145 I/MyApp: Task deleted successfully id=task-15
+01-15 09:01:28.678  2145  2145 D/MyApp: Navigating back to MainActivity after deletion
+01-15 09:01:30.901  2145  2178 I/NetworkUtils: Starting API request url=https://api.example.com/v2/dashboard
+01-15 09:01:31.567  2145  2178 I/NetworkUtils: API response received status=200 duration=666ms size=12.1KB
+01-15 09:01:31.890  2145  2145 D/MyApp: Dashboard refreshed items=23
+01-15 09:01:35.123  2145  2145 D/MyApp: User tapped on FAB (create new task)
+01-15 09:01:35.456  2145  2145 I/ActivityManager: Displayed com.example.myapp/.ui.CreateTaskActivity: +298ms
+01-15 09:01:40.789  2145  2145 D/MyApp: User entering new task title="Weekly report"
+01-15 09:01:45.012  2145  2145 D/MyApp: User selected due date=2024-01-22
+01-15 09:01:48.345  2145  2145 D/MyApp: User selected priority=HIGH
+01-15 09:01:50.678  2145  2178 I/NetworkUtils: Starting API request url=https://api.example.com/v2/tasks method=POST
+01-15 09:01:51.345  2145  2178 I/NetworkUtils: API response received status=201 duration=667ms size=3.8KB
+01-15 09:01:51.678  2145  2145 I/MyApp: Task created successfully id=task-58
+01-15 09:01:52.901  2145  2145 D/MyApp: Navigating back to MainActivity
+01-15 09:01:55.123  1000  1022 I/GCManager: GC freed 3.1MB, 42% free 10.8MB/18.5MB, paused 4ms
+01-15 09:02:00.456  2145  2145 D/MyApp: User tapped notification bell icon
+01-15 09:02:00.789  2145  2178 I/NetworkUtils: Starting API request url=https://api.example.com/v2/notifications
+01-15 09:02:01.567  2145  2178 I/NetworkUtils: API response received status=200 duration=778ms size=8.2KB
+01-15 09:02:01.890  2145  2145 D/MyApp: Notifications loaded count=7 unread=3
+01-15 09:02:05.123  2145  2145 D/MyApp: User tapped notification id=notif-201 type=task_assigned
+01-15 09:02:05.456  2145  2178 I/NetworkUtils: Starting API request url=https://api.example.com/v2/notifications/201/read method=POST
+01-15 09:02:06.012  2145  2178 I/NetworkUtils: API response received status=200 duration=556ms
+01-15 09:02:08.345  2145  2145 D/MyApp: Navigating to task from notification task_id=task-33
+01-15 09:02:08.678  2145  2145 I/ActivityManager: Displayed com.example.myapp/.ui.DetailActivity: +302ms
+01-15 09:02:09.901  2145  2178 I/NetworkUtils: Starting API request url=https://api.example.com/v2/tasks/33
+01-15 09:02:10.567  2145  2178 I/NetworkUtils: API response received status=200 duration=666ms size=4.5KB
+01-15 09:02:15.890  2145  2145 D/MyApp: User navigated back to MainActivity
+01-15 09:02:20.123  2145  2145 D/MyApp: App moving to background (onPause)
+01-15 09:02:20.456  2145  2190 I/MyApp: Background sync started
+01-15 09:02:20.789  2145  2190 D/MyApp: Checking for pending offline changes
+01-15 09:02:21.012  2145  2190 I/MyApp: Background sync completed duration=556ms changes=0
+01-15 09:05:30.345  2145  2145 D/MyApp: App returning to foreground (onResume)
+01-15 09:05:30.678  2145  2178 I/NetworkUtils: Starting API request url=https://api.example.com/v2/dashboard
+01-15 09:05:31.901  2145  2178 I/NetworkUtils: API response received status=200 duration=1223ms size=12.3KB
+01-15 09:05:32.234  2145  2145 D/MyApp: Dashboard refreshed items=23
+01-15 09:05:35.567  2145  2145 D/MyApp: User tapped on item id=task-58
+01-15 09:05:35.890  2145  2145 I/ActivityManager: Displayed com.example.myapp/.ui.DetailActivity: +278ms
+01-15 09:05:36.123  2145  2178 I/NetworkUtils: Starting API request url=https://api.example.com/v2/tasks/58
+01-15 09:05:36.890  2145  2178 I/NetworkUtils: API response received status=200 duration=767ms size=3.9KB
+01-15 09:05:40.123  2145  2145 D/MyApp: User tapped share button for task id=task-58
+01-15 09:05:40.456  2145  2145 I/MyApp: Share intent created for task-58
+01-15 09:05:40.789  1000  1015 I/ActivityManager: START u0 {act=android.intent.action.CHOOSER} from uid 10085
+01-15 09:05:45.012  2145  2145 D/MyApp: Share completed, user returned to app
+01-15 09:05:50.345  2145  2145 D/MyApp: User navigated back to MainActivity
+01-15 09:05:55.678  2145  2200 E/MyApp: Uncaught exception in background thread
+01-15 09:05:55.679  2145  2200 E/MyApp: java.lang.OutOfMemoryError: Failed to allocate a 12582928 byte allocation with 4194304 free bytes and 10MB until OOM
+01-15 09:05:55.680  2145  2200 E/MyApp: 	at com.example.myapp.data.ImageCache.loadBitmap(ImageCache.java:89)
+01-15 09:05:55.681  2145  2200 E/MyApp: 	at com.example.myapp.data.ImageCache.get(ImageCache.java:45)
+01-15 09:05:55.682  2145  2200 E/MyApp: 	at com.example.myapp.ui.adapter.TaskAdapter.onBindViewHolder(TaskAdapter.java:67)
+01-15 09:05:55.683  2145  2200 E/MyApp: 	at androidx.recyclerview.widget.RecyclerView$Adapter.onBindViewHolder(RecyclerView.java:7065)
+01-15 09:05:55.684  2145  2200 E/MyApp: 	at androidx.recyclerview.widget.RecyclerView$Recycler.tryBindViewHolderByDeadline(RecyclerView.java:6012)
+01-15 09:05:56.012  2145  2145 W/MyApp: Image loading failed for task-58, using placeholder
+01-15 09:05:56.345  1000  1022 I/GCManager: GC freed 8.2MB, 55% free 8.3MB/18.5MB, paused 8ms
+01-15 09:06:00.678  2145  2145 D/MyApp: User scrolling dashboard list
+01-15 09:06:05.901  2145  2145 V/MyApp: RecyclerView onScrolled dx=0 dy=342 visible=8 total=23
+01-15 09:06:10.234  2145  2145 D/MyApp: User long-pressed on item id=task-10
+01-15 09:06:10.567  2145  2145 D/MyApp: Context menu shown for task-10
+01-15 09:06:12.890  2145  2145 D/MyApp: User selected "Mark as complete" for task-10
+01-15 09:06:13.123  2145  2178 I/NetworkUtils: Starting API request url=https://api.example.com/v2/tasks/10/complete method=POST
+01-15 09:06:13.890  2145  2178 I/NetworkUtils: API response received status=200 duration=767ms size=3.6KB
+01-15 09:06:14.123  2145  2145 I/MyApp: Task marked as complete id=task-10
+01-15 09:06:14.456  2145  2145 V/MyApp: Animating task-10 removal from list
+01-15 09:06:20.789  1000  1015 W/ActivityManager: Low memory condition detected available=145MB threshold=150MB
+01-15 09:06:20.790  1000  1015 I/ActivityManager: Killing background processes to free memory
+01-15 09:06:21.012  1000  1015 I/ActivityManager: Process com.android.chrome (pid 1876) killed: adj=900
+01-15 09:06:21.345  1000  1015 I/ActivityManager: Process com.spotify.music (pid 1945) killed: adj=900
+01-15 09:06:25.678  2145  2145 D/MyApp: User pulled to refresh
+01-15 09:06:25.901  2145  2178 I/NetworkUtils: Starting API request url=https://api.example.com/v2/dashboard
+01-15 09:06:26.567  2145  2178 I/NetworkUtils: API response received status=200 duration=666ms size=11.8KB
+01-15 09:06:26.890  2145  2145 D/MyApp: Dashboard refreshed items=22
+01-15 09:06:30.123  2145  2145 D/MyApp: User tapped profile avatar
+01-15 09:06:30.456  2145  2145 I/ActivityManager: Displayed com.example.myapp/.ui.ProfileActivity: +312ms
+01-15 09:06:31.789  2145  2178 I/NetworkUtils: Starting API request url=https://api.example.com/v2/user/profile
+01-15 09:06:32.345  2145  2178 I/NetworkUtils: API response received status=200 duration=556ms size=2.1KB
+01-15 09:06:35.678  2145  2145 D/MyApp: Profile loaded user=john.doe@example.com plan=premium
+01-15 09:06:40.901  2145  2145 D/MyApp: User navigated back to MainActivity
+01-15 09:06:45.234  2145  2178 E/NetworkUtils: SSL handshake failed url=https://api.example.com/v2/sync error=javax.net.ssl.SSLHandshakeException: Chain validation failed
+01-15 09:06:45.567  2145  2145 W/MyApp: Sync failed due to SSL error, will retry with backoff delay=30s
+01-15 09:06:50.890  1000  1015 I/ConnectivityManager: Network connectivity changed type=WIFI state=CONNECTED ssid="OfficeWiFi"
+01-15 09:06:51.123  2145  2145 I/MyApp: Network state changed: WIFI
+01-15 09:06:55.456  2145  2190 I/MyApp: Background sync started (network recovered)
+01-15 09:06:55.789  2145  2190 I/NetworkUtils: Starting API request url=https://api.example.com/v2/sync
+01-15 09:06:56.567  2145  2190 I/NetworkUtils: API response received status=200 duration=778ms size=1.2KB
+01-15 09:06:56.890  2145  2190 I/MyApp: Background sync completed duration=1434ms changes=2
+01-15 09:07:00.123  2145  2145 D/MyApp: Sync update received: 2 tasks updated by other team members
+01-15 09:07:00.456  2145  2145 I/MyApp: Showing sync notification badge count=2
+01-15 09:07:05.789  2145  2145 D/MyApp: User tapped on item id=task-33
+01-15 09:07:06.012  2145  2145 I/ActivityManager: Displayed com.example.myapp/.ui.DetailActivity: +223ms
+01-15 09:07:06.345  2145  2178 I/NetworkUtils: Starting API request url=https://api.example.com/v2/tasks/33
+01-15 09:07:07.012  2145  2178 I/NetworkUtils: API response received status=200 duration=667ms size=4.7KB
+01-15 09:07:10.345  2145  2145 D/MyApp: User adding comment to task-33
+01-15 09:07:15.678  2145  2178 I/NetworkUtils: Starting API request url=https://api.example.com/v2/tasks/33/comments method=POST
+01-15 09:07:16.345  2145  2178 I/NetworkUtils: API response received status=201 duration=667ms size=1.5KB
+01-15 09:07:16.678  2145  2145 I/MyApp: Comment added to task-33
+01-15 09:07:20.901  2145  2145 D/MyApp: User navigated back to MainActivity
+01-15 09:07:25.234  1000  1022 I/GCManager: GC freed 1.8MB, 38% free 11.5MB/18.5MB, paused 3ms
+01-15 09:07:30.567  2145  2145 D/MyApp: App moving to background (onPause)
+01-15 09:07:30.890  2145  2190 I/MyApp: Background sync started
+01-15 09:07:31.123  2145  2190 D/MyApp: Syncing 0 local changes, fetching remote updates
+01-15 09:07:31.890  2145  2190 I/MyApp: Background sync completed duration=1000ms changes=0
+01-15 09:07:32.123  2145  2145 I/MyApp: Scheduling next sync in 15 minutes
+01-15 09:10:00.456  1000  1015 I/ActivityManager: ANR in com.example.myapp (com.example.myapp/.ui.MainActivity)
+01-15 09:10:00.457  1000  1015 I/ActivityManager: PID: 2145
+01-15 09:10:00.458  1000  1015 I/ActivityManager: Reason: Input dispatching timed out (Waiting to send non-key event because the touched window has not finished processing certain input events that were delivered to it over 500.0ms ago. Wait queue length: 3. Head age: 5512.3ms.)
+01-15 09:10:00.459  1000  1015 I/ActivityManager: Load: 12.4 / 8.7 / 5.2
+01-15 09:10:00.460  1000  1015 I/ActivityManager: CPU usage from 0ms to 5823ms later:
+01-15 09:10:00.461  1000  1015 I/ActivityManager:   78% 2145/com.example.myapp: 72% user + 6% kernel / faults: 12453 minor
+01-15 09:10:00.462  1000  1015 I/ActivityManager:   12% 1000/system_server: 8% user + 4% kernel / faults: 234 minor
+01-15 09:10:05.789  2145  2145 E/MyApp: ANR detected - main thread was blocked by database operation
+01-15 09:10:05.790  2145  2145 W/MyApp: Moving heavy database query to background thread
+01-15 09:10:10.123  2145  2145 I/MyApp: App recovered from ANR condition
+01-15 09:10:15.456  2145  2145 D/MyApp: User interaction resumed after ANR recovery
+01-15 09:10:20.789  2145  2145 D/MyApp: User tapped on item id=task-22
+01-15 09:10:21.012  2145  2145 I/ActivityManager: Displayed com.example.myapp/.ui.DetailActivity: +198ms
+01-15 09:10:25.345  2145  2145 D/MyApp: User navigated back to MainActivity
+01-15 09:10:30.678  2145  2145 I/MyApp: User logged out
+01-15 09:10:30.901  2145  2145 D/MyApp: Clearing session data and auth tokens
+01-15 09:10:31.234  2145  2145 I/ActivityManager: Displayed com.example.myapp/.ui.LoginActivity: +333ms
+01-15 09:10:31.567  2145  2145 I/MyApp: Login screen displayed

@@ -1,0 +1,100 @@
+15/Jan/2024 08:00:56 [INFO] Sauvegarde complète effectuée -- taille: 14,7 Go, durée: 23 min
+15/Jan/2024 08:01:26 [INFO] Nouveau compte créé: Ágnes Kövér (département: Développement)
+15/Jan/2024 08:01:53 [WARN] Certificat SSL expire dans 7 jours pour hébergeur.interne
+15/Jan/2024 08:02:29 [ERROR] Échec de l'authentification pour Søren Bjørnstad -- mot de passe invalide
+15/Jan/2024 08:04:11 [WARN] Mémoire insuffisante: seulement 256 Mo disponibles sur le noeud principal
+15/Jan/2024 08:04:48 [INFO] Transfert terminé: 847 dossiers envoyés à l'entrepôt de données
+15/Jan/2024 08:05:42 [WARN] Nombre de connexions simultanées élevé: 847/1 000
+15/Jan/2024 08:07:14 [WARN] Version obsolète de l'API utilisée par le client 'système_v2'
+15/Jan/2024 08:08:27 [WARN] Mémoire insuffisante: seulement 256 Mo disponibles sur le noeud principal
+15/Jan/2024 08:09:51 [DEBUG] Cache vidé: 2 048 entrées supprimées, mémoire libérée: 512 Mo
+15/Jan/2024 08:10:21 [ERROR] Erreur de parsing XML: caractère inattendu à la position 847
+15/Jan/2024 08:11:58 [INFO] Nouveau compte créé: Ágnes Kövér (département: Développement)
+15/Jan/2024 08:13:18 [INFO] Fichier reçu: rapport_décembre_2023.pdf (taille: 2,4 Mo)
+15/Jan/2024 08:15:04 [INFO] Mise à jour du schéma de base de données: v45 vers v46 appliquée
+15/Jan/2024 08:16:49 [WARN] Temps de réponse élevé: 3 200 ms pour /api/données/résumé
+15/Jan/2024 08:18:39 [INFO] Sauvegarde complète effectuée -- taille: 14,7 Go, durée: 23 min
+15/Jan/2024 08:20:34 [DEBUG] Vérification d'intégrité des données terminée -- aucune anomalie détectée
+15/Jan/2024 08:21:06 [ERROR] Échec de l'authentification pour Søren Bjørnstad -- mot de passe invalide
+15/Jan/2024 08:22:10 [DEBUG] Vérification d'intégrité des données terminée -- aucune anomalie détectée
+15/Jan/2024 08:22:37 [WARN] Espace disque faible sur /données/archives -- 2,1 Go restants
+15/Jan/2024 08:23:54 [DEBUG] Résolution DNS pour hôte 'passerelle.local' -- 10.0.0.1
+15/Jan/2024 08:24:09 [WARN] Version obsolète de l'API utilisée par le client 'système_v2'
+15/Jan/2024 08:25:21 [DEBUG] Vérification d'intégrité des données terminée -- aucune anomalie détectée
+15/Jan/2024 08:27:05 [WARN] Mémoire insuffisante: seulement 256 Mo disponibles sur le noeud principal
+15/Jan/2024 08:28:10 [DEBUG] Résolution DNS pour hôte 'passerelle.local' -- 10.0.0.1
+15/Jan/2024 08:29:06 [INFO] Démarrage du système de sauvegarde -- version 4.2.1
+15/Jan/2024 08:29:45 [INFO] Rapport généré pour la période du 01/Déc/2023 au 31/Déc/2023
+15/Jan/2024 08:29:50 [ERROR] Erreur de parsing XML: caractère inattendu à la position 847
+15/Jan/2024 08:30:21 [WARN] Temps de réponse élevé: 3 200 ms pour /api/données/résumé
+15/Jan/2024 08:31:34 [WARN] Mémoire insuffisante: seulement 256 Mo disponibles sur le noeud principal
+15/Jan/2024 08:32:38 [WARN] Nombre de connexions simultanées élevé: 847/1 000
+15/Jan/2024 08:34:38 [INFO] Fichier reçu: rapport_décembre_2023.pdf (taille: 2,4 Mo)
+15/Jan/2024 08:36:00 [INFO] Redémarrage du service 'traitement_commandes' après mise à jour
+15/Jan/2024 08:36:11 [WARN] Temps de réponse élevé: 3 200 ms pour /api/données/résumé
+15/Jan/2024 08:36:32 [INFO] Fichier reçu: rapport_décembre_2023.pdf (taille: 2,4 Mo)
+15/Jan/2024 08:38:08 [DEBUG] Requête SQL exécutée en 45ms -- résultat: 128 lignes
+15/Jan/2024 08:39:48 [INFO] Opérateur André Lefèvre a modifié la configuration réseau
+15/Jan/2024 08:40:49 [INFO] Nouveau compte créé: Ágnes Kövér (département: Développement)
+15/Jan/2024 08:41:16 [WARN] Nombre de connexions simultanées élevé: 847/1 000
+15/Jan/2024 08:42:45 [DEBUG] Requête SQL exécutée en 45ms -- résultat: 128 lignes
+15/Jan/2024 08:42:54 [INFO] Utilisateur François Müller connecté depuis Zürich
+15/Jan/2024 08:43:01 [DEBUG] Requête SQL exécutée en 45ms -- résultat: 128 lignes
+15/Jan/2024 08:44:06 [DEBUG] Vérification d'intégrité des données terminée -- aucune anomalie détectée
+15/Jan/2024 08:45:55 [ERROR] Erreur de parsing XML: caractère inattendu à la position 847
+15/Jan/2024 08:46:10 [ERROR] Exception non gérée dans le module 'facturation': NullPointerException
+15/Jan/2024 08:47:09 [TRACE] Paquet réseau entrant: src=192.168.1.42 dst=10.0.0.5 taille=1 472 octets
+15/Jan/2024 08:47:25 [ERROR] Échec de l'authentification pour Søren Bjørnstad -- mot de passe invalide
+15/Jan/2024 08:48:09 [INFO] Nouveau compte créé: Ágnes Kövér (département: Développement)
+15/Jan/2024 08:48:14 [INFO] Sauvegarde complète effectuée -- taille: 14,7 Go, durée: 23 min
+15/Jan/2024 08:49:01 [ERROR] Échec de l'authentification pour Søren Bjørnstad -- mot de passe invalide
+15/Jan/2024 08:50:12 [INFO] Sauvegarde complète effectuée -- taille: 14,7 Go, durée: 23 min
+15/Jan/2024 08:50:42 [INFO] Mise à jour du schéma de base de données: v45 vers v46 appliquée
+15/Jan/2024 08:52:27 [INFO] Démarrage du système de sauvegarde -- version 4.2.1
+15/Jan/2024 08:53:53 [INFO] Fichier reçu: rapport_décembre_2023.pdf (taille: 2,4 Mo)
+15/Jan/2024 08:54:54 [ERROR] Impossible d'écrire dans /var/log/système -- disque plein à 100%
+15/Jan/2024 08:56:08 [INFO] Sauvegarde complète effectuée -- taille: 14,7 Go, durée: 23 min
+15/Jan/2024 08:57:58 [ERROR] Échec de la synchronisation avec le système de paiement -- code: ÉCHOUÉ_003
+15/Jan/2024 08:58:19 [WARN] Temps de réponse élevé: 3 200 ms pour /api/données/résumé
+15/Jan/2024 08:59:52 [DEBUG] Cache vidé: 2 048 entrées supprimées, mémoire libérée: 512 Mo
+15/Jan/2024 09:00:04 [ERROR] Échec de l'authentification pour Søren Bjørnstad -- mot de passe invalide
+15/Jan/2024 09:01:43 [WARN] Espace disque faible sur /données/archives -- 2,1 Go restants
+15/Jan/2024 09:03:19 [INFO] Nouveau compte créé: Ágnes Kövér (département: Développement)
+15/Jan/2024 09:05:03 [INFO] Transfert terminé: 847 dossiers envoyés à l'entrepôt de données
+15/Jan/2024 09:05:27 [INFO] Nouveau compte créé: Ágnes Kövér (département: Développement)
+15/Jan/2024 09:06:24 [INFO] Utilisateur François Müller connecté depuis Zürich
+15/Jan/2024 09:06:41 [INFO] Utilisateur François Müller connecté depuis Zürich
+15/Jan/2024 09:07:04 [INFO] Tâche planifiée 'nettoyage_données' terminée -- 1 847 entrées supprimées
+15/Jan/2024 09:07:31 [DEBUG] Requête SQL exécutée en 45ms -- résultat: 128 lignes
+15/Jan/2024 09:08:28 [ERROR] Échec de l'authentification pour Søren Bjørnstad -- mot de passe invalide
+15/Jan/2024 09:08:59 [INFO] Mise à jour du schéma de base de données: v45 vers v46 appliquée
+15/Jan/2024 09:10:15 [DEBUG] Résolution DNS pour hôte 'passerelle.local' -- 10.0.0.1
+15/Jan/2024 09:11:58 [DEBUG] Cache vidé: 2 048 entrées supprimées, mémoire libérée: 512 Mo
+15/Jan/2024 09:13:45 [WARN] Certificat SSL expire dans 7 jours pour hébergeur.interne
+15/Jan/2024 09:15:38 [ERROR] Impossible d'écrire dans /var/log/système -- disque plein à 100%
+15/Jan/2024 09:15:58 [WARN] Espace disque faible sur /données/archives -- 2,1 Go restants
+15/Jan/2024 09:17:48 [WARN] Temps de réponse élevé: 3 200 ms pour /api/données/résumé
+15/Jan/2024 09:18:16 [DEBUG] Vérification d'intégrité des données terminée -- aucune anomalie détectée
+15/Jan/2024 09:18:30 [WARN] Nombre de connexions simultanées élevé: 847/1 000
+15/Jan/2024 09:19:11 [ERROR] Connexion échouée pour l'utilisateur José García -- délai dépassé
+15/Jan/2024 09:20:30 [DEBUG] Thread-pool: actifs=12 en_attente=3 max=50 tâches_complétées=8 847
+15/Jan/2024 09:20:41 [DEBUG] Résolution DNS pour hôte 'passerelle.local' -- 10.0.0.1
+15/Jan/2024 09:21:13 [INFO] Sauvegarde complète effectuée -- taille: 14,7 Go, durée: 23 min
+15/Jan/2024 09:22:09 [DEBUG] Résolution DNS pour hôte 'passerelle.local' -- 10.0.0.1
+15/Jan/2024 09:23:59 [INFO] Opérateur André Lefèvre a modifié la configuration réseau
+15/Jan/2024 09:24:55 [INFO] Sauvegarde complète effectuée -- taille: 14,7 Go, durée: 23 min
+15/Jan/2024 09:25:53 [DEBUG] Thread-pool: actifs=12 en_attente=3 max=50 tâches_complétées=8 847
+15/Jan/2024 09:26:45 [INFO] Rapport généré pour la période du 01/Déc/2023 au 31/Déc/2023
+15/Jan/2024 09:27:01 [DEBUG] Requête SQL exécutée en 45ms -- résultat: 128 lignes
+15/Jan/2024 09:28:58 [INFO] Démarrage du système de sauvegarde -- version 4.2.1
+15/Jan/2024 09:29:50 [INFO] Transfert terminé: 847 dossiers envoyés à l'entrepôt de données
+15/Jan/2024 09:31:44 [INFO] Sauvegarde complète effectuée -- taille: 14,7 Go, durée: 23 min
+15/Jan/2024 09:33:27 [INFO] Redémarrage du service 'traitement_commandes' après mise à jour
+15/Jan/2024 09:34:01 [INFO] Tâche planifiée 'nettoyage_données' terminée -- 1 847 entrées supprimées
+15/Jan/2024 09:35:55 [TRACE] Paquet réseau entrant: src=192.168.1.42 dst=10.0.0.5 taille=1 472 octets
+15/Jan/2024 09:36:28 [TRACE] Paquet réseau entrant: src=192.168.1.42 dst=10.0.0.5 taille=1 472 octets
+15/Jan/2024 09:38:05 [INFO] Tâche planifiée 'nettoyage_données' terminée -- 1 847 entrées supprimées
+15/Jan/2024 09:38:23 [WARN] Espace disque faible sur /données/archives -- 2,1 Go restants
+15/Jan/2024 09:39:56 [INFO] Transfert terminé: 847 dossiers envoyés à l'entrepôt de données
+15/Jan/2024 09:40:41 [INFO] Fichier reçu: rapport_décembre_2023.pdf (taille: 2,4 Mo)
+15/Jan/2024 09:42:23 [INFO] Opérateur André Lefèvre a modifié la configuration réseau
