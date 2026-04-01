@@ -49,16 +49,22 @@ FetchContent_MakeAvailable(nfd)
 
 # ── OpenGL ────────────────────────────────────────────────────────────────────
 find_package(OpenGL REQUIRED)
+find_package(Threads REQUIRED)
 
 # ── Executable ────────────────────────────────────────────────────────────────
 add_executable(log-viewer
   src/main.cpp
+  src/log_file.cpp
+  src/log_parser.cpp
+  src/filter_engine.cpp
+  src/stats.cpp
 )
 
 target_link_libraries(log-viewer PRIVATE
   imgui
   OpenGL::GL
   nfd
+  Threads::Threads
 )
 
 # On macOS, suppress OpenGL deprecation warnings
