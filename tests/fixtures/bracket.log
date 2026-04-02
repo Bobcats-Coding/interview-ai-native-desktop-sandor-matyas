@@ -1,0 +1,6 @@
+2024-01-15T08:00:01.234Z [INFO] Server starting on port 8080
+2024-01-15T08:00:02.100Z [DEBUG] Loading configuration file config.yaml
+2024-01-15T08:00:03.500Z [WARN] Slow startup detected duration=1500ms threshold=1000ms
+2024-01-15T08:00:04.800Z [ERROR] Failed to connect to database host=db.internal port=5432
+2024-01-15T08:00:05.000Z [TRACE] Entering retry loop attempt=1
+2024-01-15T08:00:06.200Z [INFO] Connection established after retry

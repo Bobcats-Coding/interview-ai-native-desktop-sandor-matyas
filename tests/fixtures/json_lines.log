@@ -1,0 +1,5 @@
+{"timestamp":"2024-01-15T06:00:00.163Z","level":"info","service":"api","msg":"Request received","method":"GET","path":"/health"}
+{"timestamp":"2024-01-15T06:00:01.000Z","level":"debug","service":"api","msg":"Cache hit","key":"user:42"}
+{"timestamp":"2024-01-15T06:00:02.500Z","level":"warn","service":"api","msg":"Rate limit approaching","current":950,"limit":1000}
+{"timestamp":"2024-01-15T06:00:03.800Z","level":"error","service":"api","msg":"Database query failed","error":"timeout after 30s"}
+{"timestamp":"2024-01-15T06:00:04.100Z","level":"trace","service":"api","msg":"Span ended","duration_ms":4}

@@ -59,6 +59,19 @@ bool FilterEngine::is_filtering() const {
     return filtering_.load();
 }
 
+void FilterEngine::wait_idle(int timeout_ms) {
+    auto deadline = std::chrono::steady_clock::now() + std::chrono::milliseconds(timeout_ms);
+    while (std::chrono::steady_clock::now() < deadline) {
+        bool pending = false;
+        {
+            std::lock_guard<std::mutex> lock(mutex_);
+            pending = pending_request_.pending;
+        }
+        if (!filtering_.load() && !pending) return;
+        std::this_thread::sleep_for(std::chrono::milliseconds(5));
+    }
+}
+
 // ── Worker thread ─────────────────────────────────────────────────────────────
 
 void FilterEngine::worker_loop() {
@@ -86,16 +99,17 @@ void FilterEngine::worker_loop() {
 
             if (shutdown_.load()) return;
 
-            // Take the latest request
+            // Take the latest request; set filtering=true BEFORE clearing pending
+            // so wait_idle() never sees both as false between these two events.
             text       = pending_request_.text;
             is_regex   = pending_request_.is_regex;
             level_mask = pending_request_.level_mask;
             version    = pending_request_.version;
+            filtering_.store(true);
             pending_request_.pending = false;
         }
 
         cancel_.store(false);
-        filtering_.store(true);
         run_filter(text, is_regex, level_mask, version);
         filtering_.store(false);
     }

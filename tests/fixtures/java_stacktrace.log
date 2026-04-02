@@ -1,0 +1,11 @@
+2024-01-15 10:00:01,234 INFO  [com.example.App] - Application started
+2024-01-15 10:00:02,500 ERROR [com.example.Service] - Failed to process request
+com.example.ServiceException: Connection refused to backend:8080
+	at com.example.Service.callBackend(Service.java:42)
+	at com.example.Service.processRequest(Service.java:18)
+	at com.example.Controller.handle(Controller.java:99)
+Caused by: java.net.ConnectException: Connection refused
+	at java.net.PlainSocketImpl.socketConnect(Native Method)
+	... 12 more
+2024-01-15 10:00:03,100 WARN  [com.example.App] - Retrying after failure
+2024-01-15 10:00:04,200 INFO  [com.example.App] - Recovery successful
