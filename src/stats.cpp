@@ -42,7 +42,7 @@ static int64_t to_epoch_ms(int year, int month, int day,
 }
 
 // Try to parse a timestamp from a log line. Returns -1 if not found.
-static int64_t parse_timestamp(std::string_view line) {
+int64_t parse_timestamp(std::string_view line) {
     const char* p = line.data();
     const char* end = p + line.size();
 

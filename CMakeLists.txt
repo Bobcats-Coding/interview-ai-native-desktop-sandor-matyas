@@ -71,3 +71,46 @@ target_link_libraries(log-viewer PRIVATE
 if(APPLE)
   target_compile_definitions(log-viewer PRIVATE GL_SILENCE_DEPRECATION)
 endif()
+
+# ── Catch2 ────────────────────────────────────────────────────────────────────
+FetchContent_Declare(
+  Catch2
+  GIT_REPOSITORY https://github.com/catchorg/Catch2.git
+  GIT_TAG        v3.7.1
+)
+FetchContent_MakeAvailable(Catch2)
+
+enable_testing()
+
+set(LOG_VIEWER_LOGIC_SOURCES
+  src/log_file.cpp
+  src/log_parser.cpp
+  src/filter_engine.cpp
+  src/stats.cpp
+)
+
+# ── Unit + integration tests ──────────────────────────────────────────────────
+add_executable(log-viewer-tests
+  tests/test_log_file.cpp
+  tests/test_log_parser.cpp
+  tests/test_filter_engine.cpp
+  tests/test_stats.cpp
+  tests/test_integration.cpp
+  ${LOG_VIEWER_LOGIC_SOURCES}
+)
+target_include_directories(log-viewer-tests PRIVATE src)
+target_link_libraries(log-viewer-tests PRIVATE Catch2::Catch2WithMain Threads::Threads)
+target_compile_definitions(log-viewer-tests PRIVATE
+  EXAMPLES_DIR="${CMAKE_SOURCE_DIR}/examples"
+  FIXTURES_DIR="${CMAKE_SOURCE_DIR}/tests/fixtures"
+)
+include(Catch)
+catch_discover_tests(log-viewer-tests)
+
+# ── Headless E2E harness ──────────────────────────────────────────────────────
+add_executable(log-viewer-headless
+  tests/headless_main.cpp
+  ${LOG_VIEWER_LOGIC_SOURCES}
+)
+target_include_directories(log-viewer-headless PRIVATE src)
+target_link_libraries(log-viewer-headless PRIVATE Threads::Threads)

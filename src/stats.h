@@ -23,3 +23,6 @@ struct LogStats {
 };
 
 LogStats compute_stats(const LogFile& file, const std::vector<LineMeta>& meta);
+
+// Exposed for testing. Returns milliseconds since epoch, or -1 if not parseable.
+int64_t parse_timestamp(std::string_view line);

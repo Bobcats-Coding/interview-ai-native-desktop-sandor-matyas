@@ -1,0 +1,5 @@
+01-15 09:00:01.123  1000  1000 I/SystemServer: System starting
+01-15 09:00:02.456  1000  1001 D/ActivityManager: Loading activity records
+01-15 09:00:03.789  2000  2001 W/NetworkUtils: Slow network detected latency=2340ms
+01-15 09:00:04.012  2000  2002 E/CrashHandler: Fatal exception in thread main
+01-15 09:00:05.345  3000  3001 V/Verbose: Entering verbose trace mode

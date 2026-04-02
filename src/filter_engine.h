@@ -35,6 +35,10 @@ public:
     // True while a filter operation is running.
     bool is_filtering() const;
 
+    // Block until no filter is running and no request is pending.
+    // Used in tests to synchronise with the background thread.
+    void wait_idle(int timeout_ms = 3000);
+
 private:
     void worker_loop();
     void run_filter(const std::string& text, bool is_regex,
