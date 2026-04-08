@@ -87,6 +87,7 @@ set(LOG_VIEWER_LOGIC_SOURCES
   src/log_parser.cpp
   src/filter_engine.cpp
   src/stats.cpp
+  src/export.cpp
 )
 
 # ── Unit + integration tests ──────────────────────────────────────────────────
@@ -96,6 +97,7 @@ add_executable(log-viewer-tests
   tests/test_filter_engine.cpp
   tests/test_stats.cpp
   tests/test_integration.cpp
+  tests/test_export.cpp
   ${LOG_VIEWER_LOGIC_SOURCES}
 )
 target_include_directories(log-viewer-tests PRIVATE src)
