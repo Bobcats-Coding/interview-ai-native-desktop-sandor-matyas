@@ -51,13 +51,18 @@ FetchContent_MakeAvailable(nfd)
 find_package(OpenGL REQUIRED)
 find_package(Threads REQUIRED)
 
-# ── Executable ────────────────────────────────────────────────────────────────
-add_executable(log-viewer
-  src/main.cpp
+set(LOG_VIEWER_LOGIC_SOURCES
   src/log_file.cpp
   src/log_parser.cpp
   src/filter_engine.cpp
   src/stats.cpp
+  src/export.cpp
+)
+
+# ── Executable ────────────────────────────────────────────────────────────────
+add_executable(log-viewer
+  src/main.cpp
+  ${LOG_VIEWER_LOGIC_SOURCES}
 )
 
 target_link_libraries(log-viewer PRIVATE
@@ -81,14 +86,6 @@ FetchContent_Declare(
 FetchContent_MakeAvailable(Catch2)
 
 enable_testing()
-
-set(LOG_VIEWER_LOGIC_SOURCES
-  src/log_file.cpp
-  src/log_parser.cpp
-  src/filter_engine.cpp
-  src/stats.cpp
-  src/export.cpp
-)
 
 # ── Unit + integration tests ──────────────────────────────────────────────────
 add_executable(log-viewer-tests

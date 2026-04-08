@@ -8,6 +8,7 @@
 #include "log_parser.h"
 #include "filter_engine.h"
 #include "stats.h"
+#include "export.h"
 
 #include <cstdio>
 #include <cstring>
@@ -28,6 +29,7 @@ struct AppState {
     std::array<bool, static_cast<size_t>(LogLevel::COUNT)> level_mask;
     std::array<bool, static_cast<size_t>(LogLevel::COUNT)> prev_level_mask;
     std::string               error_msg;
+    std::string               last_export_msg;
 
     AppState() {
         level_mask.fill(true);
@@ -96,6 +98,33 @@ static void open_file_dialog(AppState& state) {
     NFD_Quit();
 }
 
+// ── Export helper ────────────────────────────────────────────────────────────
+
+static void export_file_dialog(AppState& state) {
+    if (!state.file) return;
+    NFD_Init();
+
+    nfdchar_t* out_path = nullptr;
+    nfdfilteritem_t filters[] = {
+        { "Log files", "log,txt" },
+        { "All files", "*"      },
+    };
+    nfdresult_t result = NFD_SaveDialog(&out_path, filters, 2, nullptr, "filtered_output.log");
+
+    if (result == NFD_OKAY) {
+        size_t count = state.filter_engine.current_results().matching_indices.size();
+        if (export_filtered_lines(*state.file, state.filter_engine, out_path)) {
+            state.last_export_msg = "Exported " + std::to_string(count) + " lines";
+            state.error_msg.clear();
+        } else {
+            state.error_msg = "Export failed: could not write to file.";
+        }
+        NFD_FreePath(out_path);
+    }
+
+    NFD_Quit();
+}
+
 // ── Level toggle button ───────────────────────────────────────────────────────
 
 static void level_toggle(const char* label, LogLevel level, AppState& state) {
@@ -156,6 +185,8 @@ int main() {
         if (ImGui::IsKeyPressed(ImGuiKey_Escape) && !ImGui::IsAnyItemActive()) {
             state.filter_buf[0] = '\0';
         }
+        if (ImGui::IsKeyPressed(ImGuiKey_E))
+            export_file_dialog(state);
 
         // Push filter changes to engine
         if (state.file && state.filter_changed()) {
@@ -180,6 +211,12 @@ int main() {
             if (ImGui::BeginMenu("File")) {
                 if (ImGui::MenuItem("Open...", "Ctrl+O"))
                     open_file_dialog(state);
+                ImGui::Separator();
+                bool can_export = state.file != nullptr;
+                if (!can_export) ImGui::BeginDisabled();
+                if (ImGui::MenuItem("Export filtered results...", "Ctrl+E"))
+                    export_file_dialog(state);
+                if (!can_export) ImGui::EndDisabled();
                 ImGui::Separator();
                 if (ImGui::MenuItem("Quit", "Alt+F4"))
                     glfwSetWindowShouldClose(window, true);
@@ -322,6 +359,10 @@ int main() {
                 ImGui::PlotHistogram("##warn_chart", warns.data(), static_cast<int>(warns.size()),
                     0, "WRN", 0.0f, FLT_MAX, {bar_width, chart_h});
                 ImGui::PopStyleColor();
+            }
+            if (!state.last_export_msg.empty()) {
+                ImGui::Spacing();
+                ImGui::TextColored({0.4f, 1.0f, 0.4f, 1.0f}, "%s", state.last_export_msg.c_str());
             }
         } else {
             ImGui::TextDisabled("Open a file to see stats.");
