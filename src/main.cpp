@@ -4,50 +4,13 @@
 #include <GLFW/glfw3.h>
 #include <nfd.h>
 
-#include "log_file.h"
-#include "log_parser.h"
-#include "filter_engine.h"
-#include "stats.h"
+#include "tab_manager.h"
 #include "export.h"
 
 #include <cstdio>
 #include <cstring>
 #include <memory>
 #include <string>
-
-// ── App state ─────────────────────────────────────────────────────────────────
-
-struct AppState {
-    std::unique_ptr<LogFile>  file;
-    std::vector<LineMeta>     meta;
-    LogStats                  stats;
-    FilterEngine              filter_engine;
-    char                      filter_buf[256] = {};
-    char                      prev_filter_buf[256] = {};
-    bool                      filter_regex      = false;
-    bool                      prev_filter_regex = false;
-    std::array<bool, static_cast<size_t>(LogLevel::COUNT)> level_mask;
-    std::array<bool, static_cast<size_t>(LogLevel::COUNT)> prev_level_mask;
-    std::string               error_msg;
-    std::string               last_export_msg;
-
-    AppState() {
-        level_mask.fill(true);
-        prev_level_mask.fill(true);
-    }
-
-    bool filter_changed() const {
-        return std::strcmp(filter_buf, prev_filter_buf) != 0 ||
-               filter_regex != prev_filter_regex ||
-               level_mask != prev_level_mask;
-    }
-
-    void sync_filter() {
-        std::memcpy(prev_filter_buf, filter_buf, sizeof(filter_buf));
-        prev_filter_regex = filter_regex;
-        prev_level_mask = level_mask;
-    }
-};
 
 // ── Level colors ──────────────────────────────────────────────────────────────
 
@@ -64,7 +27,7 @@ static ImVec4 level_color(LogLevel level) {
 
 // ── File open helper ──────────────────────────────────────────────────────────
 
-static void open_file_dialog(AppState& state) {
+static void open_file_dialog(TabManager& tabs) {
     NFD_Init();
 
     nfdchar_t* out_path = nullptr;
@@ -75,22 +38,28 @@ static void open_file_dialog(AppState& state) {
     nfdresult_t result = NFD_OpenDialog(&out_path, filters, 2, nullptr);
 
     if (result == NFD_OKAY) {
+        // If the active tab already has a file, open in a new tab
+        if (tabs.active_tab().file) {
+            tabs.new_tab();
+        }
+
+        TabState& tab = tabs.active_tab();
         std::string error;
         auto loaded = std::make_unique<LogFile>(load_log_file(out_path, error));
         if (loaded->line_count() > 0) {
-            state.meta = parse_all_lines(*loaded);
-            state.stats = compute_stats(*loaded, state.meta);
-            state.filter_engine.set_source(loaded.get(), &state.meta);
-            state.file = std::move(loaded);
-            state.error_msg.clear();
+            tab.meta = parse_all_lines(*loaded);
+            tab.stats = compute_stats(*loaded, tab.meta);
+            tab.filter_engine().set_source(loaded.get(), &tab.meta);
+            tab.file = std::move(loaded);
+            tab.error_msg.clear();
             // Reset filter
-            state.filter_buf[0] = '\0';
-            state.prev_filter_buf[0] = '\0';
-            state.filter_regex = false;
-            state.level_mask.fill(true);
-            state.prev_level_mask.fill(true);
+            tab.filter_buf[0] = '\0';
+            tab.prev_filter_buf[0] = '\0';
+            tab.filter_regex = false;
+            tab.level_mask.fill(true);
+            tab.prev_level_mask.fill(true);
         } else {
-            state.error_msg = error.empty() ? "File is empty." : error;
+            tab.error_msg = error.empty() ? "File is empty." : error;
         }
         NFD_FreePath(out_path);
     }
@@ -100,8 +69,8 @@ static void open_file_dialog(AppState& state) {
 
 // ── Export helper ────────────────────────────────────────────────────────────
 
-static void export_file_dialog(AppState& state) {
-    if (!state.file) return;
+static void export_file_dialog(TabState& tab) {
+    if (!tab.file) return;
     NFD_Init();
 
     nfdchar_t* out_path = nullptr;
@@ -112,12 +81,12 @@ static void export_file_dialog(AppState& state) {
     nfdresult_t result = NFD_SaveDialog(&out_path, filters, 2, nullptr, "filtered_output.log");
 
     if (result == NFD_OKAY) {
-        size_t count = state.filter_engine.current_results().matching_indices.size();
-        if (export_filtered_lines(*state.file, state.filter_engine, out_path)) {
-            state.last_export_msg = "Exported " + std::to_string(count) + " lines";
-            state.error_msg.clear();
+        size_t count = tab.filter_engine().current_results().matching_indices.size();
+        if (export_filtered_lines(*tab.file, tab.filter_engine(), out_path)) {
+            tab.last_export_msg = "Exported " + std::to_string(count) + " lines";
+            tab.error_msg.clear();
         } else {
-            state.error_msg = "Export failed: could not write to file.";
+            tab.error_msg = "Export failed: could not write to file.";
         }
         NFD_FreePath(out_path);
     }
@@ -127,9 +96,9 @@ static void export_file_dialog(AppState& state) {
 
 // ── Level toggle button ───────────────────────────────────────────────────────
 
-static void level_toggle(const char* label, LogLevel level, AppState& state) {
+static void level_toggle(const char* label, LogLevel level, TabState& tab) {
     auto idx = static_cast<size_t>(level);
-    bool active = state.level_mask[idx];
+    bool active = tab.level_mask[idx];
     if (active) {
         ImGui::PushStyleColor(ImGuiCol_Button, level_color(level));
         ImGui::PushStyleColor(ImGuiCol_Text, {0.0f, 0.0f, 0.0f, 1.0f});
@@ -138,7 +107,7 @@ static void level_toggle(const char* label, LogLevel level, AppState& state) {
         ImGui::PushStyleColor(ImGuiCol_Text, {0.5f, 0.5f, 0.5f, 1.0f});
     }
     if (ImGui::SmallButton(label)) {
-        state.level_mask[idx] = !active;
+        tab.level_mask[idx] = !active;
     }
     ImGui::PopStyleColor(2);
 }
@@ -169,7 +138,7 @@ int main() {
     ImGui_ImplGlfw_InitForOpenGL(window, true);
     ImGui_ImplOpenGL3_Init("#version 330 core");
 
-    AppState state;
+    TabManager tabs;
     bool focus_filter = false;
 
     while (!glfwWindowShouldClose(window)) {
@@ -178,20 +147,29 @@ int main() {
         // Keyboard shortcuts (global, before ImGui input capture)
         if (ImGui::IsKeyDown(ImGuiKey_LeftCtrl) || ImGui::IsKeyDown(ImGuiKey_RightCtrl)) {
             if (ImGui::IsKeyPressed(ImGuiKey_O))
-                open_file_dialog(state);
+                open_file_dialog(tabs);
             if (ImGui::IsKeyPressed(ImGuiKey_F))
                 focus_filter = true;
+            if (ImGui::IsKeyPressed(ImGuiKey_T)) {
+                tabs.new_tab();
+                open_file_dialog(tabs);
+            }
+            if (ImGui::IsKeyPressed(ImGuiKey_W)) {
+                if (tabs.tab_count() > 1)
+                    tabs.close_tab(static_cast<size_t>(tabs.active_index()));
+            }
+            if (ImGui::IsKeyPressed(ImGuiKey_E))
+                export_file_dialog(tabs.active_tab());
         }
         if (ImGui::IsKeyPressed(ImGuiKey_Escape) && !ImGui::IsAnyItemActive()) {
-            state.filter_buf[0] = '\0';
+            tabs.active_tab().filter_buf[0] = '\0';
         }
-        if (ImGui::IsKeyPressed(ImGuiKey_E))
-            export_file_dialog(state);
 
         // Push filter changes to engine
-        if (state.file && state.filter_changed()) {
-            state.filter_engine.set_filter(state.filter_buf, state.filter_regex, state.level_mask);
-            state.sync_filter();
+        TabState& tab = tabs.active_tab();
+        if (tab.file && tab.filter_changed()) {
+            tab.filter_engine().set_filter(tab.filter_buf, tab.filter_regex, tab.level_mask);
+            tab.sync_filter();
         }
 
         ImGui_ImplOpenGL3_NewFrame();
@@ -210,12 +188,12 @@ int main() {
         if (ImGui::BeginMenuBar()) {
             if (ImGui::BeginMenu("File")) {
                 if (ImGui::MenuItem("Open...", "Ctrl+O"))
-                    open_file_dialog(state);
+                    open_file_dialog(tabs);
                 ImGui::Separator();
-                bool can_export = state.file != nullptr;
+                bool can_export = tab.file != nullptr;
                 if (!can_export) ImGui::BeginDisabled();
                 if (ImGui::MenuItem("Export filtered results...", "Ctrl+E"))
-                    export_file_dialog(state);
+                    export_file_dialog(tab);
                 if (!can_export) ImGui::EndDisabled();
                 ImGui::Separator();
                 if (ImGui::MenuItem("Quit", "Alt+F4"))
@@ -225,6 +203,36 @@ int main() {
             ImGui::EndMenuBar();
         }
 
+        // ── Tab bar ───────────────────────────────────────────────────────────
+        if (ImGui::BeginTabBar("##tabs", ImGuiTabBarFlags_AutoSelectNewTabs)) {
+            for (int i = 0; i < static_cast<int>(tabs.tab_count()); ) {
+                bool open = true;
+                std::string label = tabs.tab(static_cast<size_t>(i)).title()
+                                    + "##" + std::to_string(i);
+                ImGuiTabItemFlags flags = ImGuiTabItemFlags_None;
+                if (i == tabs.active_index())
+                    flags |= ImGuiTabItemFlags_SetSelected;
+                if (ImGui::BeginTabItem(label.c_str(), &open, flags)) {
+                    tabs.set_active(static_cast<size_t>(i));
+                    ImGui::EndTabItem();
+                }
+                if (!open && tabs.tab_count() > 1) {
+                    tabs.close_tab(static_cast<size_t>(i));
+                    // after close_tab, i may already point to the next tab
+                } else {
+                    ++i;
+                }
+            }
+            if (ImGui::TabItemButton("+", ImGuiTabItemFlags_Trailing | ImGuiTabItemFlags_NoTooltip)) {
+                tabs.new_tab();
+                open_file_dialog(tabs);
+            }
+            ImGui::EndTabBar();
+        }
+
+        // Re-fetch active tab reference after potential tab changes
+        TabState& cur = tabs.active_tab();
+
         // ── Filter bar ────────────────────────────────────────────────────────
         if (focus_filter) {
             ImGui::SetKeyboardFocusHere();
@@ -232,22 +240,22 @@ int main() {
         }
         ImGui::SetNextItemWidth(ImGui::GetContentRegionAvail().x - 340.0f);
         ImGui::InputTextWithHint("##filter", "Filter (type to search)...",
-            state.filter_buf, sizeof(state.filter_buf));
+            cur.filter_buf, sizeof(cur.filter_buf));
         ImGui::SameLine();
-        ImGui::Checkbox("Regex", &state.filter_regex);
+        ImGui::Checkbox("Regex", &cur.filter_regex);
 
         // Level toggles
         ImGui::SameLine();
         ImGui::Text("|");
         ImGui::SameLine();
-        level_toggle("E", LogLevel::Error, state); ImGui::SameLine();
-        level_toggle("W", LogLevel::Warn,  state); ImGui::SameLine();
-        level_toggle("I", LogLevel::Info,  state); ImGui::SameLine();
-        level_toggle("D", LogLevel::Debug, state); ImGui::SameLine();
-        level_toggle("T", LogLevel::Trace, state);
+        level_toggle("E", LogLevel::Error, cur); ImGui::SameLine();
+        level_toggle("W", LogLevel::Warn,  cur); ImGui::SameLine();
+        level_toggle("I", LogLevel::Info,  cur); ImGui::SameLine();
+        level_toggle("D", LogLevel::Debug, cur); ImGui::SameLine();
+        level_toggle("T", LogLevel::Trace, cur);
 
         // Show filtering indicator
-        if (state.filter_engine.is_filtering()) {
+        if (cur.filter_engine().is_filtering()) {
             ImGui::SameLine();
             ImGui::TextDisabled("Filtering...");
         }
@@ -259,19 +267,25 @@ int main() {
         float log_width   = ImGui::GetContentRegionAvail().x - stats_width - 8.0f;
         float area_height = ImGui::GetContentRegionAvail().y;
 
+        // Push filter changes for current tab (may have changed after tab switch)
+        if (cur.file && cur.filter_changed()) {
+            cur.filter_engine().set_filter(cur.filter_buf, cur.filter_regex, cur.level_mask);
+            cur.sync_filter();
+        }
+
         // Log content pane
         ImGui::BeginChild("##log_pane", {log_width, area_height}, false,
             ImGuiWindowFlags_HorizontalScrollbar);
 
-        if (!state.file) {
-            if (!state.error_msg.empty()) {
-                ImGui::TextColored({1.0f, 0.4f, 0.4f, 1.0f}, "%s", state.error_msg.c_str());
+        if (!cur.file) {
+            if (!cur.error_msg.empty()) {
+                ImGui::TextColored({1.0f, 0.4f, 0.4f, 1.0f}, "%s", cur.error_msg.c_str());
             } else {
                 ImGui::TextDisabled("No file open. Use File > Open to load a log file.");
             }
         } else {
             // Get filtered results and render with clipper
-            const auto& results = state.filter_engine.current_results();
+            const auto& results = cur.filter_engine().current_results();
             int total = static_cast<int>(results.matching_indices.size());
 
             ImGuiListClipper clipper;
@@ -279,8 +293,8 @@ int main() {
             while (clipper.Step()) {
                 for (int row = clipper.DisplayStart; row < clipper.DisplayEnd; row++) {
                     uint32_t idx = results.matching_indices[static_cast<size_t>(row)];
-                    auto line_view = state.file->line(idx);
-                    auto level = state.meta[idx].level;
+                    auto line_view = cur.file->line(idx);
+                    auto level = cur.meta[idx].level;
 
                     // Line number (dimmed, original line number)
                     ImGui::TextDisabled("%7u ", idx + 1);
@@ -302,9 +316,9 @@ int main() {
         ImGui::BeginChild("##stats_pane", {stats_width, area_height}, true);
         ImGui::TextDisabled("Statistics");
         ImGui::Separator();
-        if (state.file) {
-            const auto& s = state.stats;
-            const auto& results = state.filter_engine.current_results();
+        if (cur.file) {
+            const auto& s = cur.stats;
+            const auto& results = cur.filter_engine().current_results();
 
             ImGui::Text("Total:  %zu lines", s.total_lines);
             if (results.matching_indices.size() != s.total_lines) {
@@ -360,9 +374,9 @@ int main() {
                     0, "WRN", 0.0f, FLT_MAX, {bar_width, chart_h});
                 ImGui::PopStyleColor();
             }
-            if (!state.last_export_msg.empty()) {
+            if (!cur.last_export_msg.empty()) {
                 ImGui::Spacing();
-                ImGui::TextColored({0.4f, 1.0f, 0.4f, 1.0f}, "%s", state.last_export_msg.c_str());
+                ImGui::TextColored({0.4f, 1.0f, 0.4f, 1.0f}, "%s", cur.last_export_msg.c_str());
             }
         } else {
             ImGui::TextDisabled("Open a file to see stats.");
